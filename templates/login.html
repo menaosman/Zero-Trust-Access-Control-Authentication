@@ -1,1 +1,22 @@
-
+{% extends 'base.html' %}
+{% block content %}
+<form id="loginForm">
+<input name="email" placeholder="email" />
+<input name="password" placeholder="password" type="password" />
+<input name="totp" placeholder="TOTP code (after enrollment)" />
+<button>Login</button>
+</form>
+<pre id="out"></pre>
+<script>
+const f = document.getElementById('loginForm');
+f.onsubmit = async (e) => {
+e.preventDefault();
+const body = Object.fromEntries(new FormData(f).entries());
+const r = await fetch('/auth/login', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)});
+const j = await r.json();
+document.getElementById('out').textContent = JSON.stringify(j, null, 2);
+if (j.access) localStorage.setItem('access', j.access);
+if (j.refresh) localStorage.setItem('refresh', j.refresh);
+};
+</script>
+{% endblock %}
