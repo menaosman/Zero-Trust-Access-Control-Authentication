@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Policy Editor</h2>
+<form method="post" action="/policy/add" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;align-items:end;">
+<input name="name" placeholder="name" required>
+<input name="path_prefix" placeholder="/resources" value="/resources">
+<input name="role_required" placeholder="ADMIN or blank">
+<label>Trusted?<input type="checkbox" name="require_trusted_device"></label>
+<input name="start_hour" type="number" min="0" max="23" value="7">
+<input name="end_hour" type="number" min="0" max="23" value="22">
+<button>Add</button>
+</form>
+<table border="1" cellpadding="6" cellspacing="0" style="margin-top:12px;">
+<tr><th>ID</th><th>Name</th><th>Path</th><th>Role</th><th>Trusted</th><th>Hours</th><th>Enabled</th><th>Actions</th></tr>
+{% for p in policies %}
+<tr>
+<td>{{p.id}}</td>
+<td>{{p.name}}</td>
+<td>{{p.path_prefix}}</td>
+<td>{{p.role_required or '-'}}</td>
+<td>{{'Yes' if p.require_trusted_device else 'No'}}</td>
+<td>{{p.start_hour}}–{{p.end_hour}}</td>
+<td>{{'ON' if p.enabled else 'OFF'}}</td>
+<td>
+<form method="post" action="/policy/toggle/{{p.id}}" style="display:inline;"><button>Toggle</button></form>
+<form method="post" action="/policy/delete/{{p.id}}" style="display:inline;" onclick="return confirm('Delete?');"><button>Delete</button></form>
+</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
