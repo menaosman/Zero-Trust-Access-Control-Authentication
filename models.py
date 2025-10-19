@@ -45,3 +45,15 @@ resource = db.Column(db.String(255))
 decision = db.Column(db.String(32)) # allow, deny, step_up, require_attestation
 reason = db.Column(db.String(255))
 meta = db.Column(db.Text) # optional JSON serialized
+
+
+class Policy(db.Model):
+__tablename__ = "policies"
+id = db.Column(db.Integer, primary_key=True)
+name = db.Column(db.String(64), unique=True, nullable=False)
+path_prefix = db.Column(db.String(128), default="/")
+role_required = db.Column(db.String(32), nullable=True) # e.g., ADMIN
+require_trusted_device = db.Column(db.Boolean, default=False)
+start_hour = db.Column(db.Integer, default=0)
+end_hour = db.Column(db.Integer, default=23)
+enabled = db.Column(db.Boolean, default=True)
