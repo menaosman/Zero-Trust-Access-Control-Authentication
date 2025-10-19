@@ -1,1 +1,6 @@
-
+{% extends 'base.html' %}
+{% block content %}
+<h3>Scan QR in Google Authenticator</h3>
+<p>Secret: {{ secret }}</p>
+<p>URI: {{ otpauth }}</p>
+{% endblock %}
