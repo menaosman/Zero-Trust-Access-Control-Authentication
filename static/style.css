@@ -1,1 +1,5 @@
-
+body { font-family: system-ui, Arial, sans-serif; margin: 24px; }
+header { margin-bottom: 16px; }
+input { display:block; margin: 6px 0; padding: 8px; width: 280px; }
+button { padding: 8px 12px; margin-right: 8px; }
+pre { background: #111; color: #0f0; padding: 12px; overflow: auto; }
