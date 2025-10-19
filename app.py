@@ -5,6 +5,7 @@ from blueprints.auth import bp as auth_bp
 from blueprints.attest import bp as attest_bp
 from blueprints.resources import bp as res_bp
 from blueprints.admin import bp as admin_bp
+from blueprints.policy import bp as policy_bp
 
 
 
@@ -14,7 +15,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
 
-
+app.register_blueprint(policy_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(attest_bp)
 app.register_blueprint(res_bp)
