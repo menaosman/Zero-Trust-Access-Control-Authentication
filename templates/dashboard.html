@@ -1,1 +1,17 @@
-
+{% extends 'base.html' %}
+{% block content %}
+<button id="me">/me</button>
+<button id="users">/admin/users</button>
+<button id="audit">/admin/audit/summary</button>
+<pre id="out"></pre>
+<script>
+async function call(path){
+const access = localStorage.getItem('access');
+const r = await fetch(path, {headers:{'Authorization': 'Bearer '+access, 'X-DFP': 'demo-device-hash'}});
+const j = await r.json(); document.getElementById('out').textContent = JSON.stringify(j,null,2);
+}
+document.getElementById('me').onclick = ()=>call('/me');
+document.getElementById('users').onclick = ()=>call('/admin/users');
+document.getElementById('audit').onclick = ()=>call('/admin/audit/summary');
+</script>
+{% endblock %}
